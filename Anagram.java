@@ -28,7 +28,24 @@ public class Anagram {
 
 	// Returns true if the two given strings are anagrams, false otherwise.
 	public static boolean isAnagram(String str1, String str2) {
-		// Replace the following statement with your code
+		String new1 = preProcess(str1);
+		String new2 = preProcess(str2);
+		new1 = new1.replaceAll(" ", "");
+		new2 = new2.replaceAll(" ", "");
+		boolean anagramCheck = false;
+		
+		for (int i = 0; i < new1.length(); i++) {
+			anagramCheck = false;
+			for (int j = 0; j < new2.length(); j++) {
+				if (new1.charAt(i) == new2.charAt(j)) {
+					// something that will make sure that the j index in the string wont be used again.
+					anagramCheck = true;
+				}
+			}
+			if (anagramCheck == false){
+				return false;
+			}	
+		}
 		return false;
 	}
 	   
@@ -36,14 +53,23 @@ public class Anagram {
 	// to lower-case, and all the other characters are deleted, except for spaces, which are left
 	// as is. For example, the string "What? No way!" becomes "whatnoway"
 	public static String preProcess(String str) {
-		// Replace the following statement with your code
-		return "";
+		String newString = "";
+		for (int i = 0; i < str.length(); i++) {
+			char curChar = str.charAt(i);
+			if (Character.isLetter(curChar) || Character.isWhitespace(curChar)){
+				newString = newString + str.charAt(i);
+			}
+		}
+		newString = newString.toLowerCase();
+		return newString;
 	} 
 	   
 	// Returns a random anagram of the given string. The random anagram consists of the same
 	// characters as the given string, re-arranged in a random order. 
 	public static String randomAnagram(String str) {
-		// Replace the following statement with your code
+		double random = Math.random();
+		int place = (integer)random * str.length();
+		for (int i = 0; i < )
 		return "";
 	}
 }
