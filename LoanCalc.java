@@ -14,15 +14,15 @@ public class LoanCalc {
 		int n = Integer.parseInt(args[2]);
 		System.out.println("Loan = " + loan + ", interest rate = " + rate + "%, periods = " + n);
 
-		// Computes the periodical payment using brute force search
+		  //Computes the periodical payment using brute force search
 		System.out.print("\nPeriodical payment, using brute force: ");
 		System.out.println((int) bruteForceSolver(loan, rate, n, epsilon));
 		System.out.println("number of iterations: " + iterationCounter);
 
 		// Computes the periodical payment using bisection search
-		//System.out.print("\nPeriodical payment, using bi-section search: ");
-		//System.out.println((int) bisectionSolver(loan, rate, n, epsilon));
-		//System.out.println("number of iterations: " + iterationCounter);
+		System.out.print("\nPeriodical payment, using bi-section search: ");
+		System.out.println((int) bisectionSolver(loan, rate, n, epsilon));
+		System.out.println("number of iterations: " + iterationCounter);
 
 	}
 
@@ -30,11 +30,10 @@ public class LoanCalc {
 	// interest rate (as a percentage), the number of periods (n), and the periodical payment.
 	private static double endBalance(double loan, double rate, int n, double payment) {	
 		// Replace the following statement with your code
-		double end = loan;
 		for (int i = 0; i < n; i++){
-			end = end * (1 + (rate * 0.01)) - payment;
+			loan = (loan-payment) + ((loan-payment) * (rate/100));
 		}
-		return end;
+		return loan;
 	}
 	
 	// Uses sequential search to compute an approximation of the periodical payment
@@ -45,14 +44,10 @@ public class LoanCalc {
     public static double bruteForceSolver(double loan, double rate, int n, double epsilon) {
 		// Replace the following statement with your code
 		double payment = loan/n;
-		System.out.println("the payment: " + payment);
 		iterationCounter = 0;
-		while (endBalance(loan, rate, n, payment) >= 0){
-			System.out.println(endBalance(loan, rate, n, payment));
-			iterationCounter++;
-			System.out.println("iteration num: " + iterationCounter);	
+		while (endBalance(loan, rate, n, payment) > 0){
 			payment = payment + epsilon;
-			System.out.println("new payment check: " + payment);
+			iterationCounter++;
 		}
 		return payment;
     }
@@ -67,16 +62,15 @@ public class LoanCalc {
 		double low = loan / (double) n;
 		double high = loan;
 		double payment = (low + high) / 2.0;
-
-		while (endBalance(loan, rate, n, payment) != epsilon) {
-			if (payment * (rate * 0.01 + 1) * n <= loan){
+		
+		while (high - low > epsilon) {
+			payment = (low + high) / 2.0;
+			if (endBalance(loan, rate, n, payment) * endBalance(loan, rate, n, low) > epsilon){
 				low = payment;
-				payment = (low + high) / 2.0;
 				iterationCounter++;
 			}
 			else {
 				high = payment;
-				payment = (low + high) / 2.0;
 				iterationCounter++;
 			}
 		}

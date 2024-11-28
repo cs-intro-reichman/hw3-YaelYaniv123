@@ -30,23 +30,28 @@ public class Anagram {
 	public static boolean isAnagram(String str1, String str2) {
 		String new1 = preProcess(str1);
 		String new2 = preProcess(str2);
-		new1 = new1.replaceAll(" ", "");
-		new2 = new2.replaceAll(" ", "");
-		boolean anagramCheck = false;
-		
+		new1 = new1.replace(" ", "");
+		new2 = new2.replace(" ", "");
+		int countInNew1 = 0;
+		int countInNew2 = 0;
 		for (int i = 0; i < new1.length(); i++) {
-			anagramCheck = false;
-			for (int j = 0; j < new2.length(); j++) {
-				if (new1.charAt(i) == new2.charAt(j)) {
-					// something that will make sure that the j index in the string wont be used again.
-					anagramCheck = true;
+			countInNew1 = 0;
+			countInNew2 = 0;
+			for (int j = 0; j < new1.length(); j++) {
+				if (new1.charAt(i) == new1.charAt(j)) {
+					countInNew1++;
 				}
 			}
-			if (anagramCheck == false){
+			for (int j = 0; j < new1.length(); j++) {
+				if (new1.charAt(i) == new2.charAt(j)) {
+					countInNew2++;
+				}
+			}
+			if (countInNew1 != countInNew2) {
 				return false;
-			}	
+			}
 		}
-		return false;
+		return true;
 	}
 	   
 	// Returns a preprocessed version of the given string: all the letter characters are converted
@@ -67,9 +72,18 @@ public class Anagram {
 	// Returns a random anagram of the given string. The random anagram consists of the same
 	// characters as the given string, re-arranged in a random order. 
 	public static String randomAnagram(String str) {
-		double random = Math.random();
-		int place = (integer)random * str.length();
-		for (int i = 0; i < )
-		return "";
+		String new1 = preProcess(str);
+		new1 = new1.replace(" ", "");
+		int new1Length = new1.length();
+		String anagram = "";
+		
+		for (int i = 0; i < new1Length; i++){
+			double random = Math.random();
+			int place = (int) (random * new1.length());
+			anagram = anagram + new1.charAt(place);
+			new1 = new1.replace(new1.charAt(place), ' ');
+			new1 = new1.replace(" ", "");
+		}
+		return anagram;
 	}
 }
