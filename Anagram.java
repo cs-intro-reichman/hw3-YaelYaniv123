@@ -74,11 +74,13 @@ public class Anagram {
     public static String randomAnagram(String str) {
         String temp = preProcess(str);
         String anagram = "";
+		int newIndex = (int) (Math.random() * temp.length());
 
         while (temp.length() > 0) {
-            int newIndex = (int) (Math.random() * temp.length());
             anagram = anagram + temp.charAt(newIndex);
             temp = temp.substring(0, newIndex) + temp.substring(newIndex+1, temp.length());
+			newIndex = (int) (Math.random() * temp.length());
+
         }
 
         return anagram;
