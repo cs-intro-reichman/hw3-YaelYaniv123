@@ -76,10 +76,12 @@ public class Anagram {
 		new1 = new1.replace(" ", "");
 		int new1Length = new1.length();
 		String anagram = "";
-		
+		if (new1Length == 0) {
+			return new1;
+		}
 		for (int i = 0; i < new1Length; i++){
-			double random = Math.random();
-			int place = (int) (random * new1.length());
+			double random = Math.random() * new1.length();
+			int place = (int) (random);
 			anagram = anagram + new1.charAt(place);
 			new1 = new1.replace(new1.charAt(place), ' ');
 			new1 = new1.replace(" ", "");
